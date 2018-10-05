@@ -1,21 +1,8 @@
 # Example of kNN implemented from Scratch in Python
 import csv
 import random
-import math
 import operator
 
-def euclideanDistance(instance1, instance2, length):
-	distance = 0
-	for x in range(length):
-		distance += pow((instance1[x] - instance2[x]), 2)
-	return math.sqrt(distance)
-
-def getAccuracy(testSet, predictions):
-	correct = 0
-	for x in range(len(testSet)):
-		if testSet[x][-1] == predictions[x]:
-			correct += 1
-	return (correct/float(len(testSet))) * 100.0
 
 class kNN(object):
 	def __init__(self, k, distance, data):
@@ -25,8 +12,8 @@ class kNN(object):
 
 	def getNeighbors(self, testInstance, columns):
 		distances = []
-		for coloumn in columns:
-			dist =self.distance(testInstance, self.data[x], length)
+		for x in range(len(self.data)):
+			dist =self.distance(testInstance, self.data[x], columns)
 			distances.append((self.data[x], dist))
 		distances.sort(key=operator.itemgetter(1))
 		neighbors = []
@@ -42,6 +29,11 @@ class kNN(object):
 				classVotes[response] += 1
 			else:
 				classVotes[response] = 1
+		print(classVotes)
 		sortedVotes = sorted(classVotes.iteritems(), key=operator.itemgetter(1), reverse=True)
 		return sortedVotes[0][0]
-	 
+
+	def getPrediction(self, testInstance, columns):
+		neighbors = self.getNeighbors(testInstance, columns)
+		response = self.getResponse(neighbors)
+		return response

@@ -45,9 +45,3 @@ def getData():
 	dataframe = getDataFrames(dataFiles)
 	dataframe = cleanDataFrame(dataframe)
 	return dataframe
-
-dataframe = getData()
-mask = np.random.rand(len(dataframe)) < 0.8
-trainingData, testingData = dataframe[mask], dataframe[~mask]
-npval = dataframe.get_values()
-print(npval[100])
