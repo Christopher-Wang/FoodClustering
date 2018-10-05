@@ -23,9 +23,11 @@ def main():
 	dataframe = dataframe.get_values()
 	mask = np.random.rand(len(dataframe)) < 0.8
 	trainingData, testingData = dataframe[mask], dataframe[~mask]
-	model = kNN.kNN(10, euclideanDistance, trainingData)
-
+	model = kNN.kNN(8, euclideanDistance, trainingData)
 	columns = [x for x in range(3, 11)]
-	print(model.getPrediction(testingData[0], columns))
+
+	predictions = model.getPredictions(testingData, columns)
+	print(getAccuracy(testingData, predictions))
+
 
 main()

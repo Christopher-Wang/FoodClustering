@@ -29,11 +29,16 @@ class kNN(object):
 				classVotes[response] += 1
 			else:
 				classVotes[response] = 1
-		print(classVotes)
-		sortedVotes = sorted(classVotes.iteritems(), key=operator.itemgetter(1), reverse=True)
-		return sortedVotes[0][0]
+		sortedVotes = max(classVotes.items(), key=operator.itemgetter(1))[0]
+		return sortedVotes
 
 	def getPrediction(self, testInstance, columns):
 		neighbors = self.getNeighbors(testInstance, columns)
 		response = self.getResponse(neighbors)
 		return response
+
+	def getPredictions(self, testSet, columns):
+		predictions = []
+		for testInstance in testSet:
+			predictions.append(self.getPrediction(testInstance, columns))
+		return predictions
